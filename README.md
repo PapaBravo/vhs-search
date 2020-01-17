@@ -1,8 +1,8 @@
-# react-autocomplete-demo
+# VHS Data Search
 
-Demo app for autocomplete widget using React and Elastic Search
+This is a demo application showing how to enable a fast and comfortable search on the VHS data. 
 
-The full write-up is available at https://medium.com/@rcdexta
+The data can be found at https://daten.berlin.de/datensaetze/kurse-der-berliner-volkshochschulen. Download the json and move it to `data/courses.json`. 
 
 ### Setup
 
@@ -17,3 +17,7 @@ $ yarn
 Start the server by running `yarn start` command
 
 The UI expects elastic search to be running on 9200 port.
+
+```bash
+docker run --name elastic_search -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e "http.cors.enabled=true" -e "http.cors.allow-origin=*" docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+```
