@@ -22,8 +22,7 @@ class AutoComplete extends React.Component {
   renderSuggestion = suggestion => {
     return (
       <div className="result">
-        <div>{suggestion.fullName}</div>
-        <div className="shortCode">{suggestion.shortCode}</div>
+        <div>{suggestion.title}</div>
       </div>
     )
   }
@@ -34,14 +33,14 @@ class AutoComplete extends React.Component {
 
   onSuggestionsFetchRequested = ({ value }) => {
     axios
-      .post('http://localhost:9200/crm_app/customers/_search', {
+      .post('http://localhost:9200/vhs/courses/_search', {
         query: {
           multi_match: {
             query: value,
-            fields: ['fullName', 'shortCode']
+            fields: ['title', 'subtitle', 'description']
           }
         },
-        sort: ['_score', { createdDate: 'desc' }]
+        sort: ['_score']
       })
       .then(res => {
         const results = res.data.hits.hits.map(h => h._source)

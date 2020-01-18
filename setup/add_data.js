@@ -1,5 +1,5 @@
 const axios = require('../node_modules/axios');
-const vhsCourses = require('../data/courses.sample.json');
+const vhsCourses = require('../data/courses.json');
 
 function getDescription(vhsText) {
     const description = vhsText.find(t => t.eigenschaft === 'Beschreibung');
