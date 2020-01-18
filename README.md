@@ -21,3 +21,8 @@ The UI expects elastic search to be running on 9200 port.
 ```bash
 docker run --name elastic_search -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e "http.cors.enabled=true" -e "http.cors.allow-origin=*" docker.elastic.co/elasticsearch/elasticsearch:6.4.0
 ```
+
+Resetting data: 
+```bash
+curl -X DELETE 'http://localhost:9200/_all'
+```
