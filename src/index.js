@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Autosuggest from 'react-autosuggest'
 import axios from 'axios'
 import { debounce } from 'throttle-debounce'
+
+import CourseList from './courseList.component';
 
 import './styles.css'
 
@@ -27,8 +28,9 @@ class AutoComplete extends React.Component {
     )
   }
 
-  onChange = (event, { newValue }) => {
-    this.setState({ value: newValue })
+  onChange = (event) => {
+    this.setState({ value: event.target.value });
+    this.onSuggestionsFetchRequested(this.state);
   }
 
   onSuggestionsFetchRequested = ({ value }) => {
@@ -44,7 +46,7 @@ class AutoComplete extends React.Component {
       })
       .then(res => {
         const results = res.data.hits.hits.map(h => h._source)
-        this.setState({ suggestions: results })
+        this.setState({ suggestions: results, courses: results })
       })
   }
 
@@ -53,25 +55,11 @@ class AutoComplete extends React.Component {
   }
 
   render() {
-    const { value, suggestions } = this.state
-
-    const inputProps = {
-      placeholder: 'customer name or short code',
-      value,
-      onChange: this.onChange
-    }
-
     return (
       <div className="App">
-        <h1>AutoComplete Demo</h1>
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={suggestion => suggestion.fullName}
-          renderSuggestion={this.renderSuggestion}
-          inputProps={inputProps}
-        />
+        <h1>VHS Suche</h1>
+        <input className="search" value={this.state.searchValue} onChange={this.onChange}></input>
+        <CourseList courses={this.state.suggestions}></CourseList>
       </div>
     )
   }
